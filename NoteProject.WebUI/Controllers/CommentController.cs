@@ -17,7 +17,7 @@ namespace NoteProject.WebUI.Controllers
     {
         private NoteManager noteManager = new NoteManager();
         private CommentManager commentManager = new CommentManager();
-        // GET: Comment
+        /// GET: Comment
         public ActionResult ShowNoteComments(int? id)
         {
             if (id == null)
