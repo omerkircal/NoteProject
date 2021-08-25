@@ -3,6 +3,7 @@ using NoteProject.BusinessLayer.Results;
 using NoteProject.Entities;
 using NoteProject.Entities.Messages;
 using NoteProject.Entities.ValueObjects;
+using NoteProject.WebUI.Filters;
 using NoteProject.WebUI.Models;
 using NoteProject.WebUI.ViewModels;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 
 namespace NoteProject.WebUI.Controllers
 {
+    [Exc]
     public class HomeController : Controller
     {
         private NoteManager noteManager = new NoteManager();
@@ -30,7 +32,7 @@ namespace NoteProject.WebUI.Controllers
             //    return View(TempData["nm"] as List<Note>);
             //}
             //List<Note> list =nm.GetAllNote().OrderByDescending(x=> x.ModifiedOn).ToList();
-            List<Note> list = noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList();
+            List<Note> list = noteManager.ListQueryable().Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList();
             return View(list);
         }
 
@@ -47,7 +49,7 @@ namespace NoteProject.WebUI.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
+            return View("Index", cat.Notes.Where(x => x.IsDraft == false).OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult MostLiked()
@@ -61,6 +63,7 @@ namespace NoteProject.WebUI.Controllers
             return View();
         }
 
+        [Auth]
         public ActionResult ShowProfile()
         {
            
@@ -79,6 +82,7 @@ namespace NoteProject.WebUI.Controllers
             return View(res.Result);
         }
 
+        [Auth]
         public ActionResult EditProfile()
         {
             EvernoteUser currentUser = Session["login"] as EvernoteUser;
@@ -97,6 +101,7 @@ namespace NoteProject.WebUI.Controllers
             return View(res.Result);
         }
 
+        [Auth]
         [HttpPost]
         public ActionResult EditProfile(EvernoteUser model, HttpPostedFileBase ProfileImage)
         {
@@ -134,6 +139,7 @@ namespace NoteProject.WebUI.Controllers
 
         }
 
+        [Auth]
         public ActionResult DeleteProfile()
         {
 
@@ -297,5 +303,15 @@ namespace NoteProject.WebUI.Controllers
 
         //    return View("Ok", model);
         //}
+
+        public ActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        public ActionResult HasError()
+        {
+            return View();
+        }
     }
 }

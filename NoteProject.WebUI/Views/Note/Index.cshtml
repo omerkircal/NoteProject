@@ -51,7 +51,10 @@
                 </td>
                
                
-                <td>
+                <td width="150">
+                    <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#modal_comment" data-note-id="@item.Id">
+                        <span class="glyphicon glyphicon-comment"></span>
+                    </button>
                     <a href="/Note/Edit/@item.Id" class="btn btn-warning btn-xs" title="Edit">
                         <span class="glyphicon glyphicon-edit"></span>
                     </a>
@@ -67,3 +70,6 @@
 
     </table>
 </div>
+@Bootstrap.ModalPopup(id:"modal_comment",title:"Yorumlar")
+
+<script src="~/Scripts/comment.js"></script>

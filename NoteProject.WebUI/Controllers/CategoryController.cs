@@ -8,10 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using NoteProject.BusinessLayer;
 using NoteProject.Entities;
+using NoteProject.WebUI.Filters;
 using NoteProject.WebUI.Models;
 
 namespace NoteProject.WebUI.Controllers
 {
+    [Auth]
+    [AuthAdmin]
+    [Exc]
     public class CategoryController : Controller
     {
         private CategoryManager categoryManager = new CategoryManager();

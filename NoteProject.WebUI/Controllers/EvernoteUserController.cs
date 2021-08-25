@@ -9,9 +9,13 @@ using System.Web.Mvc;
 using NoteProject.BusinessLayer;
 using NoteProject.BusinessLayer.Results;
 using NoteProject.Entities;
+using NoteProject.WebUI.Filters;
 
 namespace NoteProject.WebUI.Controllers
 {
+    [Exc]
+    [Auth]
+    [AuthAdmin]
     public class EvernoteUserController : Controller
     {
         private EvernoteUserManager evernoteUserManager = new EvernoteUserManager();
